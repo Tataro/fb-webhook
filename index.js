@@ -4,7 +4,7 @@ const bodyParser = require('body-parser')
 const app = express().use(bodyParser.json()) // creates express http server
 
 // Sets server port and logs message on success
-app.listen(1337, () => console.log('webhook is listening'))
+app.listen(process.env.PORT, () => console.log('webhook is listening, port', process.env.PORT))
 
 // Creates the endpoint for our webhook
 app.post('/webhook', (req, res) => {
@@ -27,6 +27,10 @@ app.post('/webhook', (req, res) => {
     // Returns a '404 Not Found' if event is not from a page subscription
     res.sendStatus(404)
   }
+})
+
+app.get('/ping', (req, res) => {
+  res.status(200).send('pong')
 })
 
 // Adds support for GET requests to our webhook
